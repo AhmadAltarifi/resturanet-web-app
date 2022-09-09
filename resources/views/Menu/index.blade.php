@@ -16,7 +16,7 @@
     <!-- Custom Styles -->
     <link href="assets/css/style.min.css" rel="stylesheet">
     <!-- favicon.ico -->
-    <link rel="icon" href="assets/favicon.ico">
+    <link rel="icon" href="assets/img/logo.jpg">
 
     <title>Fire Power</title>
 </head>
@@ -65,15 +65,17 @@
                 </div>
             </div>
             <div class="row">
+                @foreach ($menu as $menu)
                 <div class="col-md-4 col-sm-6 menu-item">
 
-                        <img class="img-fluid" src="assets/img/menu/thumbnail/01-thumbnail.jpg" alt="Antipasto Porsenna">
+                    <img class="img-fluid" src="{{ asset('/storage/uploads/menu_items_images/' . $menu->item_image) }}" alt="Food">
 
-                    <div class="menu-caption">
-                        <h3 class="text-muted">Antipasto Porsenna<h3/>
-                            <p class="test-muted">Price :</p>
-                    </div>
+                <div class="menu-caption">
+                    <h3 class="text-muted">{{$menu->item_name}}<h3/>
+                        <p class="test-muted">Price : {{$menu->item_price}} ₺</p>
                 </div>
+            </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -83,7 +85,7 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     <ul class="list-inline social-buttons mb-0">
                         <li class="list-inline-item">
                             <a href="tel:+39057821393">
@@ -111,9 +113,9 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
                 <div class="col-md-12">
-                    <span class="copyright">Trattoria Porsenna &copy; 2018</span>
+                    <span class="copyright"><a href="Https://www.twitter.com/ahmad_altarifi9">Ahmad Al-Tarifi</a> &copy; 2022</span>
                 </div>
             </div>
         </div>

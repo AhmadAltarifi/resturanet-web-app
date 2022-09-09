@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Menu;
 
 class MenuController extends Controller
 {
@@ -20,7 +21,8 @@ class MenuController extends Controller
     public function index()
     {
         //
-        return view('Menu.index');
+        $menu = Menu::all();
+        return view('Menu.index')->with(compact('menu'));
     }
 
     /**
@@ -31,7 +33,8 @@ class MenuController extends Controller
     public function create()
     {
         //
-        return view('Menu.create');
+        $menu = Menu::all();
+        return view('Menu.create')->with(compact('menu'));
     }
 
     /**
@@ -43,6 +46,27 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         //
+        $menu = New Menu;
+
+        $menu->item_name = $request->item_name;
+        $menu->item_price = $request->item_price;
+
+        if ($request->hasFile('item_image')) {
+            $filenamewithExtension = $request->file('item_image')->getClientOriginalName();
+            $filename = pathinfo($filenamewithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('item_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $request->file('item_image')->storeAs('public/uploads/menu_items_images', $fileNameToStore);
+            $menu->item_image = $fileNameToStore;
+        }
+
+
+        if ( $menu->save() ) {
+            return redirect()->route('Menu.index')->with('Succes, Added a new Menu Item');
+        }
+
+        return redirect()->route('Menu.index')->with('error', 'Item Addition failed');
+
     }
 
     /**
