@@ -33,26 +33,23 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#about">Home</a>
+                        <a class="nav-link js-scroll-trigger" href="#" style="color: red;">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#menu">Menu</a>
                     </li>
+                    @auth
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{ route('Menu.create')}}" style="color: red;">Add Items</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{{ route('control')}}" style="color: red;">Edit Items</a>
+                    </li>
+                    @endauth
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Header -->
-    <header class="masthead text-center text-white">
-        <div class="container">
-            <div class="intro-text text-uppercase">
-                <div class="intro-subheading">Burger</div>
-                <div class="intro-heading">Fire Power</div>
-                <a class="btn btn-danger btn-big js-scroll-trigger" href="#menu">Go to Menu</a>
-            </div>
-        </div>
-    </header>
 
 
     <!-- Menu Grid -->

@@ -15,7 +15,9 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    <h1><a href="{{route('Menu.index')}}">Go to main page</a></h1>
                 </div>
+
             </div>
         </div>
     </div>

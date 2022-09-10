@@ -25,6 +25,12 @@ class MenuController extends Controller
         return view('Menu.index')->with(compact('menu'));
     }
 
+    public function control()
+    {
+        //
+        $menu = Menu::all();
+        return view('Menu.control')->with(compact('menu'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -89,6 +95,8 @@ class MenuController extends Controller
     public function edit($id)
     {
         //
+        $menu = Menu::find($id);
+        return view('Menu.edit')->with(compact(['menu']));
     }
 
     /**
@@ -98,9 +106,29 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
         //
+
+
+        $menu->item_name = $request->item_name;
+        $menu->item_price = $request->item_price;
+
+        if ($request->hasFile('item_image')) {
+            $filenamewithExtension = $request->file('item_image')->getClientOriginalName();
+            $filename = pathinfo($filenamewithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('item_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $request->file('item_image')->storeAs('public/uploads/menu_items_images', $fileNameToStore);
+            $menu->item_image = $fileNameToStore;
+        }
+
+
+        if ( $menu->save() ) {
+            return redirect()->route('Menu.index')->with('Succes, Added a new Menu Item');
+        }
+
+        return redirect()->route('Menu.index')->with('error', 'Item Addition failed');
     }
 
     /**
